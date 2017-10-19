@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<MenuItems>
+    <MenuItem id="debugSeperator" type="separator" />
+    <MenuItem id='toggleDebug'>
+        <Name>Toggle Debugging</Name>
+		<CallbackMethod>toggleDebug</CallbackMethod>
+	</MenuItem>
+</MenuItems>

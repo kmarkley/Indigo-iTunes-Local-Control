@@ -1,0 +1,371 @@
+<?xml version='1.0'?>
+<Actions>
+	<Action id='launch'>
+		<Name>iTunes Launch</Name>
+		<CallbackMethod>launch</CallbackMethod>
+	</Action>
+	<Action id='quit'>
+		<Name>iTunes Quit</Name>
+		<CallbackMethod>quit</CallbackMethod>
+	</Action>
+	<Action id='toggle'>
+		<Name>iTunes Toggle</Name>
+		<CallbackMethod>toggle</CallbackMethod>
+	</Action>
+	<Action id='controlsSeperator' />
+	<Action id='play'>
+		<Name>iTunes Play</Name>
+		<CallbackMethod>play</CallbackMethod>
+	</Action>
+	<Action id='pause'>
+		<Name>iTunes Pause</Name>
+		<CallbackMethod>pause</CallbackMethod>
+	</Action>
+	<Action id='playpause'>
+		<Name>iTunes Play/Pause</Name>
+		<CallbackMethod>playpause</CallbackMethod>
+	</Action>
+	<Action id='stop'>
+		<Name>iTunes Stop</Name>
+		<CallbackMethod>stop</CallbackMethod>
+	</Action>
+	<Action id='next'>
+		<Name>iTunes Next</Name>
+		<CallbackMethod>next</CallbackMethod>
+	</Action>
+	<Action id='prev'>
+		<Name>iTunes Previous</Name>
+		<CallbackMethod>prev</CallbackMethod>
+	</Action>
+	<Action id='back'>
+		<Name>iTunes Back</Name>
+		<CallbackMethod>back</CallbackMethod>
+	</Action>
+	<Action id='volumeSeperator' />
+	<Action id='setVolume'>
+		<Name>iTunes Set Volume</Name>
+		<CallbackMethod>setVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield'>
+				<Label>Volume:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='increaseVolume'>
+		<Name>iTunes Increase Volume</Name>
+		<CallbackMethod>increaseVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield' defaultValue='5'>
+				<Label>Increment:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='decreaseVolume'>
+		<Name>iTunes Decrease Volume</Name>
+		<CallbackMethod>decreaseVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield' defaultValue='5'>
+				<Label>Decrement:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='volumeToVariable'>
+		<Name>iTunes Volume to Variable</Name>
+		<CallbackMethod>volumeToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='volumeFromVariable'>
+		<Name>iTunes Volume from Variable</Name>
+		<CallbackMethod>volumeFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='fadeVolumeTo'>
+		<Name>iTunes Fade Volume To</Name>
+		<CallbackMethod>fadeVolumeTo</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield'>
+				<Label>Target Volume:</Label>
+			</Field>
+			<Field id='duration' type='textfield' defaultValue='30'>
+				<Label>Fade Seconds:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='fadeVolumeUp'>
+		<Name>iTunes Fade Volume Up</Name>
+		<CallbackMethod>fadeVolumeUp</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield'>
+				<Label>Increment:</Label>
+			</Field>
+			<Field id='duration' type='textfield' defaultValue='30'>
+				<Label>Fade Seconds:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='fadeVolumeDown'>
+		<Name>iTunes Fade Volume Down</Name>
+		<CallbackMethod>fadeVolumeDown</CallbackMethod>
+		<ConfigUI>
+			<Field id='volume' type='textfield'>
+				<Label>Decrement:</Label>
+			</Field>
+			<Field id='duration' type='textfield' defaultValue='30'>
+				<Label>Fade Seconds:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='fadeFromVariable'>
+		<Name>iTunes Fade Volume from Variable</Name>
+		<CallbackMethod>fadeFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+			<Field id='duration' type='textfield' defaultValue='30'>
+				<Label>Fade Seconds:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='fadeStop'>
+		<Name>iTunes Stop Fade</Name>
+		<CallbackMethod>fadeStop</CallbackMethod>
+	</Action>
+	<Action id='playlistSeperator' />
+	<Action id='playPlaylist'>
+		<Name>iTunes Play Playlist</Name>
+		<CallbackMethod>playPlaylist</CallbackMethod>
+		<ConfigUI>
+			<Field id='playlist' type='menu'>
+				<Label>Playlist:</Label>
+				<List class='self' method='menu_playlists'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playlistToVariable'>
+		<Name>iTunes Current Playlist to Variable</Name>
+		<CallbackMethod>playlistToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playlistFromVariable'>
+		<Name>iTunes Play Playlist from Variable</Name>
+		<CallbackMethod>playlistFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='shuffleSeperator' />
+	<Action id='shuffleStateOn'>
+		<Name>iTunes Shuffle On</Name>
+		<CallbackMethod>shuffleStateOn</CallbackMethod>
+	</Action>
+	<Action id='shuffleStateOff'>
+		<Name>iTunes Shuffle Off</Name>
+		<CallbackMethod>shuffleStateOff</CallbackMethod>
+	</Action>
+	<Action id='shuffleStateToggle'>
+		<Name>iTunes Shuffle Toggle</Name>
+		<CallbackMethod>shuffleStateToggle</CallbackMethod>
+	</Action>
+	<Action id='shuffleStateToVariable'>
+		<Name>iTunes Shuffle State to Variable</Name>
+		<CallbackMethod>shuffleStateToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='shuffleStateFromVariable'>
+		<Name>iTunes Shuffle State from Variable</Name>
+		<CallbackMethod>shuffleStateFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='shuffleModeSongs'>
+		<Name>iTunes Shuffle Songs</Name>
+		<CallbackMethod>shuffleModeSongs</CallbackMethod>
+	</Action>
+	<Action id='shuffleModeAlbums'>
+		<Name>iTunes Shuffle Albums</Name>
+		<CallbackMethod>shuffleModeAlbums</CallbackMethod>
+	</Action>
+	<Action id='shuffleModeGroupings'>
+		<Name>iTunes Shuffle Groupings</Name>
+		<CallbackMethod>shuffleModeGroupings</CallbackMethod>
+	</Action>
+	<Action id='shuffleModeToVariable'>
+		<Name>iTunes Shuffle Mode to Variable</Name>
+		<CallbackMethod>shuffleModeToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='shuffleModeFromVariable'>
+		<Name>iTunes Shuffle Mode from Variable</Name>
+		<CallbackMethod>shuffleModeFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='repeatSeperator' />
+	<Action id='repeatOff'>
+		<Name>iTunes Repeat Off</Name>
+		<CallbackMethod>repeatOff</CallbackMethod>
+	</Action>
+	<Action id='repeatOne'>
+		<Name>iTunes Repeat One</Name>
+		<CallbackMethod>repeatOne</CallbackMethod>
+	</Action>
+	<Action id='repeatAll'>
+		<Name>iTunes Repeat All</Name>
+		<CallbackMethod>repeatAll</CallbackMethod>
+	</Action>
+	<Action id='repeatToVariable'>
+		<Name>iTunes Repeat State to Variable</Name>
+		<CallbackMethod>repeatToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='repeatFromVariable'>
+		<Name>iTunes Repeat State from Variable</Name>
+		<CallbackMethod>repeatFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplaySeperator' />
+	<Action id='airplayDeviceStatus'>
+		<Name>Airplay Device Status</Name>
+		<CallbackMethod>airplayDeviceStatus</CallbackMethod>
+		<ConfigUI>
+			<Field id='device' type='menu'>
+				<Label>Airplay Device:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+			<Field id='status' type='checkbox' defaultValue='true'>
+				<Label>Active:</Label>
+			</Field>
+			<Field id='volume' type='textfield' defaultValue='100'>
+				<Label>Percent Volume:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDeviceAdd'>
+		<Name>Airplay Activate Device</Name>
+		<CallbackMethod>airplayDeviceAdd</CallbackMethod>
+		<ConfigUI>
+			<Field id='device' type='menu'>
+				<Label>Airplay Device:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDeviceRemove'>
+		<Name>Airplay Deactivate Device</Name>
+		<CallbackMethod>airplayDeviceRemove</CallbackMethod>
+		<ConfigUI>
+			<Field id='device' type='menu'>
+				<Label>Airplay Device:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDeviceToggle'>
+		<Name>Airplay Toggle Device</Name>
+		<CallbackMethod>airplayDeviceToggle</CallbackMethod>
+		<ConfigUI>
+			<Field id='device' type='menu'>
+				<Label>Airplay Device:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDeviceVolume'>
+		<Name>Airplay Device Volume</Name>
+		<CallbackMethod>airplayDeviceVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id='device' type='menu'>
+				<Label>Airplay Device:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+			<Field id='volume' type='textfield' defaultValue='100'>
+				<Label>Percent Volume:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDevicesGroup'>
+		<Name>Airplay Devices Group</Name>
+		<CallbackMethod>airplayDevicesGroup</CallbackMethod>
+		<ConfigUI>
+			<Field id='devices' type='list'>
+				<Label>Airplay Devices:</Label>
+				<List class='self' method='menu_airplay_devices'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDevicesToVariable'>
+		<Name>Airplay Devices to Variable</Name>
+		<CallbackMethod>airplayDevicesToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+			<Field id='convert' type='checkbox' defaultValue='false'>
+				<Label>Convert?:</Label>
+				<Description>Convert to string to display in control pages.</Description>
+			</Field>
+			<Field id='convertHelp2' type='label' alignWithControl='true'>
+				<Label>Leave unchecked to recall value for setting devices.</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='airplayDevicesFromVariable'>
+		<Name>Airplay Devices from Variable</Name>
+		<CallbackMethod>airplayDevicesFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+</Actions>
