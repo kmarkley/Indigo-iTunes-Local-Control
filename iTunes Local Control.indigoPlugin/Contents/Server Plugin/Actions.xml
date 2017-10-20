@@ -126,7 +126,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='fadeFromVariable'>
-		<Name>iTunes Fade Volume from Variable</Name>
+		<Name>iTunes Fade Volume to Variable Value</Name>
 		<CallbackMethod>fadeFromVariable</CallbackMethod>
 		<ConfigUI>
 			<Field id='variable' type='menu'>
@@ -354,7 +354,7 @@
 				<Description>Convert to string to display in control pages.</Description>
 			</Field>
 			<Field id='convertHelp2' type='label' alignWithControl='true'>
-				<Label>Leave unchecked to recall value for setting devices.</Label>
+				<Label>Leave unchecked to use for restoring devices.</Label>
 			</Field>
 		</ConfigUI>
 	</Action>

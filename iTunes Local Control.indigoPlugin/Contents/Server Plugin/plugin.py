@@ -338,12 +338,11 @@ class Plugin(indigo.PluginBase):
     repeat = property(_repeatGet,_repeatSet)
 
     #-------------------------------------------------------------------------------
-    def itunes.playlistGet(self):
+    def _playlistGet(self):
         return itunes.playlist_current()
-    def itunes.playlistSet(self,value):
-        if value != self.playlist:
-            itunes.playlist_play(value)
-    playlist = property(itunes.playlistGet,itunes.playlistSet)
+    def _playlistSet(self,value):
+        itunes.playlist_play(value)
+    playlist = property(_playlistGet,_playlistSet)
 
     #-------------------------------------------------------------------------------
     @property

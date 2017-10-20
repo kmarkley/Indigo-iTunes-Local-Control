@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <PluginConfig>
-	<Field id="showDebugInfo" type="checkbox">
+	<Field id='minStepTime' type='textfield' defaultValue='0.2'>
+		<Label>Minimum Step Time</Label>
+	</Field>
+	<Field id='minStepHelp' type='label' fontSize='small' fontColor='darkgray' alignWithControls='true'>
+		<Label>The minimum time in seconds between fade steps</Label>
+	</Field>
+	<Field id='debugSeparator' type='separator' />
+	<Field id='showDebugInfo' type='checkbox'>
 		<Label>Enable debuging:</Label>
 		<Description>(not recommended)</Description>
 	</Field>

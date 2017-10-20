@@ -5,9 +5,37 @@
 ################################################################################
 
 import applescript
+import indigo
+import inspect
 
 ################################################################################
-# make all the applescript objects
+# applescript helpers
+################################################################################
+def _make(ascript, wrap=True):
+    if wrap: ascript = _wrap(ascript)
+    return applescript.AppleScript(source=ascript)
+
+#-------------------------------------------------------------------------------
+def _wrap(ascript):
+    return '''
+    on run(args)
+        tell application "iTunes"
+            {}
+        end tell
+    end run
+    '''.format(ascript)
+
+#-------------------------------------------------------------------------------
+def _run(script_object, *args):
+    if len(args) == 1 and isinstance(args[0], (list,tuple,indigo.List)):
+        args = list(args[0])
+    try:
+        return script_object.run(*args)
+    except:
+        indigo.server.log('applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
+
+################################################################################
+# create all the applescript objects
 ################################################################################
 _launch = _make('''
         activate
@@ -30,7 +58,7 @@ _volume_get = _make('''
 
 #-------------------------------------------------------------------------------
 _volume_set = _make('''
-        set sound volume to arg
+        set sound volume to (item 1 of args)
     ''')
 
 #-------------------------------------------------------------------------------
@@ -70,7 +98,7 @@ _back = _make('''
 
 #-------------------------------------------------------------------------------
 _playlist_play = _make('''
-        play playlist arg
+        play playlist named (item 1 of args)
     ''')
 
 #-------------------------------------------------------------------------------
@@ -95,27 +123,43 @@ _shuffle_state_get = _make('''
 
 #-------------------------------------------------------------------------------
 _shuffle_state_set = _make('''
-    	set shuffle enabled to arg
+    	set shuffle enabled to (item 1 of args)
     ''')
 
 #-------------------------------------------------------------------------------
 _shuffle_mode_get = _make('''
-    	return shuffle mode
+    	return shuffle mode as string
     ''')
 
 #-------------------------------------------------------------------------------
 _shuffle_mode_set = _make('''
-    	set shuffle mode to arg
+    	if (item 1 of args) is "songs" then
+    		set shuffle mode to songs
+    	else if (item 1 of args) is "albums" then
+    		set shuffle mode to albums
+    	else if (item 1 of args) is "groupings" then
+    		set shuffle mode to groupings
+        else
+            error
+    	end if
     ''')
 
 #-------------------------------------------------------------------------------
 _repeat_get = _make('''
-    	return song repeat
+    	return song repeat as string
     ''')
 
 #-------------------------------------------------------------------------------
 _repeat_set = _make('''
-    	set song repeat to arg
+    	if (item 1 of args) is "off" then
+    		set song repeat to off
+    	else if (item 1 of args) is "one" then
+    		set song repeat to one
+    	else if (item 1 of args) is "all" then
+    		set song repeat to all
+        else
+            error
+    	end if
     ''')
 
 #-------------------------------------------------------------------------------
@@ -130,161 +174,143 @@ _airplay_devices_active_get = _make('''
 
 #-------------------------------------------------------------------------------
 _airplay_devices_active_set = _make('''
-        set current AirPlay devices to arg
+        set airplay_list to {}
+        repeat with device_name in args
+            set end of airplay_list to (AirPlay device device_name)
+        end repeat
+        set current AirPlay devices to airplay_list
     ''')
 
 #-------------------------------------------------------------------------------
 _airplay_device_active_get = _make('''
-        return selected of AirPlay device arg
+        return selected of AirPlay device named (item 1 of args)
     ''')
 
 #-------------------------------------------------------------------------------
 _airplay_device_active_set = _make('''
-        set device_name to item 1 of arg
-        set device_active to item 2 of arg
-        set selected of AirPlay device device_name to device_active
+        set selected of AirPlay device named (item 1 of args) to (item 2 of args)
     ''')
 
 #-------------------------------------------------------------------------------
 _airplay_device_volume_get = _make('''
-        return sound volume of AirPlay device arg
+        return sound volume of AirPlay device named (item 1 of args)
     ''')
 
 #-------------------------------------------------------------------------------
 _airplay_device_volume_set = _make('''
-        set device_name to item 1 of arg
-        set device_volume to item 2 of arg
-        set sound volume of AirPlay device device_name to device_volume
+        set sound volume of AirPlay device named (item 1 of args) to (item 2 of args)
     ''')
 
 ################################################################################
-#
+# callable methods
 ################################################################################
 def launch():
-    return _launch.run(None)
+    return _run(_launch)
 
 #-------------------------------------------------------------------------------
 def quit():
-    return _quit.run(None)
+    return _run(_quit)
 
 #-------------------------------------------------------------------------------
 def running():
-    return _running.run(None)
+    return _run(_running)
 
 #-------------------------------------------------------------------------------
 def volume_get():
-    return _volume_get.run(None)
+    return _run(_volume_get)
 
 #-------------------------------------------------------------------------------
 def volume_set(volume):
-    return _volume_set.run(volume)
+    return _run(_volume_set, volume)
 
 #-------------------------------------------------------------------------------
 def playpause():
-    return _playpause.run(None)
+    return _run(_playpause)
 
 #-------------------------------------------------------------------------------
 def play():
-    return _play.run(None)
+    return _run(_play)
 
 #-------------------------------------------------------------------------------
 def pause():
-    return _pause.run(None)
+    return _run(_pause)
 
 #-------------------------------------------------------------------------------
 def stop():
-    return _stop.run(None)
+    return _run(_stop)
 
 #-------------------------------------------------------------------------------
 def next():
-    return _next.run(None)
+    return _run(_next)
 
 #-------------------------------------------------------------------------------
 def prev():
-    return _prev.run(None)
+    return _run(_prev)
 
 #-------------------------------------------------------------------------------
 def back():
-    return _back.run(None)
+    return _run(_back)
 
 #-------------------------------------------------------------------------------
 def playlist_play(playlist):
-    return _playlist_play.run(playlist)
+    return _run(_playlist_play, playlist)
 
 #-------------------------------------------------------------------------------
 def playlists():
-    return _playlists.run(None)
+    return _run(_playlists)
 
 #-------------------------------------------------------------------------------
 def playlist_current():
-    return _playlist_current.run(None)
+    return _run(_playlist_current)
 
 #-------------------------------------------------------------------------------
 def shuffle_state_get():
-    return _shuffle_state_get.run(None)
+    return _run(_shuffle_state_get)
 
 #-------------------------------------------------------------------------------
 def shuffle_state_set(shuffle):
-    return _shuffle_state_set.run(shuffle)
+    return _run(_shuffle_state_set, shuffle)
 
 #-------------------------------------------------------------------------------
 def shuffle_mode_get():
-    return _shuffle_mode_get.run(None)
+    return _run(_shuffle_mode_get)
 
 #-------------------------------------------------------------------------------
 def shuffle_mode_set(shuffle):
-    return _shuffle_mode_set.run(shuffle)
+    return _run(_shuffle_mode_set, shuffle.lower())
 
 #-------------------------------------------------------------------------------
 def repeat_get():
-    return _repeat_get.run(None)
+    return _run(_repeat_get)
 
 #-------------------------------------------------------------------------------
 def repeat_set(repeat):
-    return _repeat_set.run(repeat)
+    return _run(_repeat_set, repeat.lower())
 
 #-------------------------------------------------------------------------------
 def airplay_devices_all():
-    return _airplay_devices_all.run(None)
+    return _run(_airplay_devices_all)
 
 #-------------------------------------------------------------------------------
 def airplay_devices_active_get():
-    return _airplay_devices_active_get.run(None)
+    return _run(_airplay_devices_active_get)
 
 #-------------------------------------------------------------------------------
 def airplay_devices_active_set(airplayDeviceList):
-    airplayList = ['AirPlay device "{}"'.format(item) for item in airplayDeviceList]
-    return _airplay_devices_active_set.run(airplayList)
+    return _run(_airplay_devices_active_set, airplayDeviceList)
 
 #-------------------------------------------------------------------------------
 def airplay_device_active_get(airplayDevice):
-    return _airplay_device_active_get.run(airplayDevice)
+    return _run(_airplay_device_active_get, airplayDevice)
 
 #-------------------------------------------------------------------------------
 def airplay_device_active_set(airplayDevice, airplayStatus):
-    return _airplay_device_active_set.run((airplayDevice, airplayStatus))
+    return _run(_airplay_device_active_set, airplayDevice, airplayStatus)
 
 #-------------------------------------------------------------------------------
 def airplay_device_volume_get(airplayDevice):
-    return _airplay_device_volume_get.run(airplayDevice)
+    return _run(_airplay_device_volume_get, airplayDevice)
 
 #-------------------------------------------------------------------------------
 def airplay_device_volume_set(airplayDevice, airplayVolume):
-    return _airplay_device_volume_set.run((airplayDevice, airplayVolume))
-
-################################################################################
-# Applescript helpers
-################################################################################
-def _make(ascript, wrap=True):
-    if wrap: ascript = _wrap(ascript)
-    return applescript.AppleScript(source=ascript)
-
-#-------------------------------------------------------------------------------
-def _wrap(ascript):
-    return '''
-    on run(arg)
-        tell application "iTunes"
-            {}
-        end tell
-    end run
-    '''.format(ascript)
+    return _run(_airplay_device_volume_set, airplayDevice, airplayVolume)

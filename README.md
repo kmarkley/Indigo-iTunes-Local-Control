@@ -22,7 +22,7 @@ Indigo plugin front end for applescript control of local iTunes instance.
 * iTunes Fade Volume To
 * iTunes Fade Volume Up
 * iTunes Fade Volume Down
-* iTunes Fade Volume from Variable
+* iTunes Fade Volume to Variable Value
 * iTunes Stop Fade
 * iTunes Play Playlist
 * iTunes Current Playlist to Variable
