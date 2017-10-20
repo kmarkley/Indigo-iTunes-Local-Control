@@ -3,8 +3,14 @@
 	<Field id='minStepTime' type='textfield' defaultValue='0.2'>
 		<Label>Minimum Step Time</Label>
 	</Field>
-	<Field id='minStepHelp' type='label' fontSize='small' fontColor='darkgray' alignWithControls='true'>
-		<Label>The minimum time in seconds between fade steps</Label>
+	<Field id='minStepHelp1' type='label' fontSize='small' fontColor='darkgray' alignWithControl='true'>
+		<Label>The minimum time between fade steps (0.1 to 1.0 seconds):</Label>
+	</Field>
+	<Field id='minStepHelp2' type='label' fontSize='small' fontColor='darkgray' alignWithControl='true'>
+		<Label>    • Too low and the loop won't be able to keep up</Label>
+	</Field>
+	<Field id='minStepHelp3' type='label' fontSize='small' fontColor='darkgray' alignWithControl='true'>
+		<Label>    • Too high and the fade will sound choppy</Label>
 	</Field>
 	<Field id='debugSeparator' type='separator' />
 	<Field id='showDebugInfo' type='checkbox'>
