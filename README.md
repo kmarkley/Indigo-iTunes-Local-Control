@@ -42,6 +42,14 @@ Indigo plugin front end for applescript control of local iTunes instance.
 * iTunes Repeat All
 * iTunes Repeat to Variable
 * iTunes Repeat from Variable
+* iTunes EQ On
+* iTunes EQ Off
+* iTunes EQ Toggle
+* iTunes EQ State to Variable
+* iTunes EQ State from Variable
+* iTunes Set EQ Preset
+* iTunes Current EQ Preset to Variable
+* iTunes Current EQ Preset from Variable
 * iTunes Airplay Device Status
 * iTunes Airplay Activate Device
 * iTunes Airplay Deactivate Device
@@ -50,3 +58,5 @@ Indigo plugin front end for applescript control of local iTunes instance.
 * iTunes Airplay Devices Group
 * iTunes Airplay Devices to Variable
 * iTunes Airplay Devices from Variable
+* iTunes Current Settings to Variable
+* iTunes Current Settings from Variable

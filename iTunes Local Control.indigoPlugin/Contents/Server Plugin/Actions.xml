@@ -271,9 +271,72 @@
 			</Field>
 		</ConfigUI>
 	</Action>
+	<Action id='eqSeperator' />
+	<Action id='eqStateOn'>
+		<Name>iTunes EQ On</Name>
+		<CallbackMethod>eqStateOn</CallbackMethod>
+	</Action>
+	<Action id='eqStateOff'>
+		<Name>iTunes EQ Off</Name>
+		<CallbackMethod>eqStateOff</CallbackMethod>
+	</Action>
+	<Action id='eqStateToggle'>
+		<Name>iTunes EQ Toggle</Name>
+		<CallbackMethod>eqStateToggle</CallbackMethod>
+	</Action>
+	<Action id='eqStateToVariable'>
+		<Name>iTunes EQ State to Variable</Name>
+		<CallbackMethod>eqStateToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='eqStateFromVariable'>
+		<Name>iTunes EQ State from Variable</Name>
+		<CallbackMethod>eqStateFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='eqPresetSet'>
+		<Name>iTunes Set EQ Preset</Name>
+		<CallbackMethod>eqPresetSet</CallbackMethod>
+		<ConfigUI>
+			<Field id='preset' type='menu'>
+				<Label>Preset:</Label>
+				<List class='self' method='menu_eq_presets'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='eqPresetToVariable'>
+		<Name>iTunes Current EQ Preset to Variable</Name>
+		<CallbackMethod>eqPresetToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='eqPresetFromVariable'>
+		<Name>iTunes Current EQ Preset from Variable</Name>
+		<CallbackMethod>eqPresetFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
 	<Action id='airplaySeperator' />
 	<Action id='airplayDeviceStatus'>
-		<Name>Airplay Device Status</Name>
+		<Name>iTunes Airplay Device Status</Name>
 		<CallbackMethod>airplayDeviceStatus</CallbackMethod>
 		<ConfigUI>
 			<Field id='device' type='menu'>
@@ -289,7 +352,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDeviceAdd'>
-		<Name>Airplay Activate Device</Name>
+		<Name>iTunes Airplay Activate Device</Name>
 		<CallbackMethod>airplayDeviceAdd</CallbackMethod>
 		<ConfigUI>
 			<Field id='device' type='menu'>
@@ -299,7 +362,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDeviceRemove'>
-		<Name>Airplay Deactivate Device</Name>
+		<Name>iTunes Airplay Deactivate Device</Name>
 		<CallbackMethod>airplayDeviceRemove</CallbackMethod>
 		<ConfigUI>
 			<Field id='device' type='menu'>
@@ -309,7 +372,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDeviceToggle'>
-		<Name>Airplay Toggle Device</Name>
+		<Name>iTunes Airplay Toggle Device</Name>
 		<CallbackMethod>airplayDeviceToggle</CallbackMethod>
 		<ConfigUI>
 			<Field id='device' type='menu'>
@@ -319,7 +382,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDeviceVolume'>
-		<Name>Airplay Device Volume</Name>
+		<Name>iTunes Airplay Device Volume</Name>
 		<CallbackMethod>airplayDeviceVolume</CallbackMethod>
 		<ConfigUI>
 			<Field id='device' type='menu'>
@@ -332,7 +395,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDevicesGroup'>
-		<Name>Airplay Devices Group</Name>
+		<Name>iTunes Airplay Devices Group</Name>
 		<CallbackMethod>airplayDevicesGroup</CallbackMethod>
 		<ConfigUI>
 			<Field id='devices' type='list'>
@@ -342,7 +405,7 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDevicesToVariable'>
-		<Name>Airplay Devices to Variable</Name>
+		<Name>iTunes Airplay Devices to Variable</Name>
 		<CallbackMethod>airplayDevicesToVariable</CallbackMethod>
 		<ConfigUI>
 			<Field id='variable' type='menu'>
@@ -359,8 +422,29 @@
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDevicesFromVariable'>
-		<Name>Airplay Devices from Variable</Name>
+		<Name>iTunes Airplay Devices from Variable</Name>
 		<CallbackMethod>airplayDevicesFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='settingsSeperator' />
+	<Action id='currentSettingsDevicesToVariable'>
+		<Name>iTunes Current Settings to Variable</Name>
+		<CallbackMethod>currentSettingsToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='currentSettingsDevicesFromVariable'>
+		<Name>iTunes Current Settings from Variable</Name>
+		<CallbackMethod>currentSettingsFromVariable</CallbackMethod>
 		<ConfigUI>
 			<Field id='variable' type='menu'>
 				<Label>Variable:</Label>

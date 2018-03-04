@@ -31,9 +31,6 @@ class Plugin(indigo.PluginBase):
         indigo.PluginBase.__init__(self, pluginId, pluginDisplayName, pluginVersion, pluginPrefs)
 
         self.updater = GitHubPluginUpdater(self)
-        self.control = Control(self)
-        self.airplay = Airplay(self)
-        self.fader   = Fader(self)
 
     #-------------------------------------------------------------------------------
     def __del__(self):
@@ -49,6 +46,10 @@ class Plugin(indigo.PluginBase):
             self.logger.debug("Debug logging enabled")
         global MIN_STEP_TIME
         MIN_STEP_TIME = self.pluginPrefs.get('minStepTime',0.2)
+
+        self.control = Control(self)
+        self.airplay = Airplay(self)
+        self.fader   = Fader(self)
 
     #-------------------------------------------------------------------------------
     def shutdown(self):
@@ -231,52 +232,52 @@ class Plugin(indigo.PluginBase):
     #-------------------------------------------------------------------------------
     def shuffleStateOn(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleState = True
+        self.shuffle_state = True
 
     #-------------------------------------------------------------------------------
     def shuffleStateOff(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleState = False
+        self.shuffle_state = False
 
     #-------------------------------------------------------------------------------
     def shuffleStateToggle(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleState = not self.shuffleState
+        self.shuffle_state = not self.shuffle_state
 
     #-------------------------------------------------------------------------------
     def shuffleStateToVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
-        variable_set(action.props['variable'],self.shuffleState)
+        variable_set(action.props['variable'],self.shuffle_state)
 
     #-------------------------------------------------------------------------------
     def shuffleStateFromVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
-        self.shuffleState = variable_get(action.props['variable'],bool)
+        self.shuffle_state = variable_get(action.props['variable'],bool)
 
     #-------------------------------------------------------------------------------
     def shuffleModeSongs(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleMode = 'songs'
+        self.shuffle_mode = 'songs'
 
     #-------------------------------------------------------------------------------
     def shuffleModeAlbums(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleMode = 'albums'
+        self.shuffle_mode = 'albums'
 
     #-------------------------------------------------------------------------------
     def shuffleModeGroupings(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.shuffleMode = 'groupings'
+        self.shuffle_mode = 'groupings'
 
     #-------------------------------------------------------------------------------
     def shuffleModeToVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
-        variable_set(action.props['variable'],self.shuffleMode)
+        variable_set(action.props['variable'],self.shuffle_mode)
 
     #-------------------------------------------------------------------------------
     def shuffleModeFromVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
-        self.shuffleMode = variable_get(action.props['variable'])
+        self.shuffle_mode = variable_get(action.props['variable'])
 
     #-------------------------------------------------------------------------------
     def repeatOff(self, action):
@@ -302,6 +303,46 @@ class Plugin(indigo.PluginBase):
     def repeatFromVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
         self.repeat = variable_get(action.props['variable'])
+
+    #-------------------------------------------------------------------------------
+    def eqStateOn(self, action):
+        self.logger.debug('action "{}"'.format(action.description))
+        self.eq_state = True
+
+    #-------------------------------------------------------------------------------
+    def eqStateOff(self, action):
+        self.logger.debug('action "{}"'.format(action.description))
+        self.eq_state = False
+
+    #-------------------------------------------------------------------------------
+    def eqStateToggle(self, action):
+        self.logger.debug('action "{}"'.format(action.description))
+        self.eq_state = not self.shuffle_state
+
+    #-------------------------------------------------------------------------------
+    def eqStateToVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        variable_set(action.props['variable'],self.eq_state)
+
+    #-------------------------------------------------------------------------------
+    def eqStateFromVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        self.eq_state = variable_get(action.props['variable'],bool)
+
+    #-------------------------------------------------------------------------------
+    def eqPresetSet(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['preset']))
+        self.eq_preset = action.props['preset']
+
+    #-------------------------------------------------------------------------------
+    def eqPresetToVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        variable_set(action.props['variable'],self.eq_preset)
+
+    #-------------------------------------------------------------------------------
+    def eqPresetFromVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        self.eq_preset = variable_get(action.props['variable'],bool)
 
     #-------------------------------------------------------------------------------
     def airplayDeviceStatus(self, action):
@@ -331,7 +372,7 @@ class Plugin(indigo.PluginBase):
 
     #-------------------------------------------------------------------------------
     def airplayDevicesGroup(self, action):
-        self.logger.debug('action "{}": {}'.format(action.description,action.props['devices']))
+        self.logger.debug('action "{}": {}'.format(action.description,list(action.props['devices'])))
         self.airplay.active_devices = action.props['devices']
 
     #-------------------------------------------------------------------------------
@@ -346,6 +387,16 @@ class Plugin(indigo.PluginBase):
     def airplayDevicesFromVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
         self.airplay.active_devices = variable_get(action.props['variable'], list)
+
+    #-------------------------------------------------------------------------------
+    def currentSettingsToVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        variable_set(action.props['variable'],self.settings)
+
+    #-------------------------------------------------------------------------------
+    def currentSettingsFromVariable(self, action):
+        self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
+        self.settings = variable_get(action.props['variable'], dict)
 
     #-------------------------------------------------------------------------------
     # Menu Methods
@@ -390,71 +441,35 @@ class Plugin(indigo.PluginBase):
         return [(item,item) for item in self.playlists]
 
     #-------------------------------------------------------------------------------
+    def menu_eq_presets(self, filter='', valuesDict=dict(), typeId='', targetId=0):
+        return [(item,item) for item in self.eq_presets]
+
+    #-------------------------------------------------------------------------------
     # Properties
     #-------------------------------------------------------------------------------
-    def _onStateGet(self):
+    def _onState_get(self):
         value = itunes.running()
         self.logger.debug('get running: {}'.format(value))
         return value
-    def _onStateSet(self, value):
+    def _onState_set(self, value):
         self.logger.debug('set running: {}'.format(value))
         if value:
             itunes.launch()
         else:
             itunes.quit()
-    onState = property(_onStateGet,_onStateSet)
+    onState = property(_onState_get,_onState_set)
 
     #-------------------------------------------------------------------------------
-    def _volumeGet(self):
+    def _volume_get(self):
         value = itunes.volume_get()
         self.logger.debug('get volume: {}'.format(value))
         return value
-    def _volumeSet(self, value):
+    def _volume_set(self, value):
         value = normalize_volume(value)
         self.fader.stop()
         self.logger.debug('set volume: {}'.format(value))
         itunes.volume_set(value)
-    volume = property(_volumeGet,_volumeSet)
-
-    #-------------------------------------------------------------------------------
-    def _shuffleStateGet(self):
-        value = itunes.shuffle_state_get()
-        self.logger.debug('get shuffle: {}'.format(value))
-        return value
-    def _shuffleStateSet(self, value):
-        self.logger.debug('set shuffle: {}'.format(value))
-        itunes.shuffle_state_set(value)
-    shuffleState = property(_shuffleStateGet,_shuffleStateSet)
-
-    #-------------------------------------------------------------------------------
-    def _shuffleModeGet(self):
-        value = itunes.shuffle_mode_get()
-        self.logger.debug('get mode: {}'.format(value))
-        return value
-    def _shuffleModeSet(self, value):
-        self.logger.debug('set mode: {}'.format(value))
-        itunes.shuffle_mode_set(value)
-    shuffleMode = property(_shuffleModeGet,_shuffleModeSet)
-
-    #-------------------------------------------------------------------------------
-    def _repeatGet(self):
-        value = itunes.repeat_get()
-        self.logger.debug('get repeat: {}'.format(value))
-        return value
-    def _repeatSet(self, value):
-        self.logger.debug('set repeat: {}'.format(value))
-        itunes.repeat_set(value)
-    repeat = property(_repeatGet,_repeatSet)
-
-    #-------------------------------------------------------------------------------
-    def _playlistGet(self):
-        value = itunes.playlist_current()
-        self.logger.debug('get playlist: {}'.format(value))
-        return value
-    def _playlistSet(self,value):
-        self.logger.debug('set playlist: {}'.format(value))
-        itunes.playlist_play(value)
-    playlist = property(_playlistGet,_playlistSet)
+    volume = property(_volume_get,_volume_set)
 
     #-------------------------------------------------------------------------------
     @property
@@ -462,6 +477,116 @@ class Plugin(indigo.PluginBase):
         value = itunes.playlists()
         self.logger.debug('all playlists: {}'.format(value))
         return value
+
+    #-------------------------------------------------------------------------------
+    def _playlist_get(self):
+        value = itunes.playlist_current()
+        self.logger.debug('get playlist: {}'.format(value))
+        return value
+    def _playlist_set(self,value):
+        self.logger.debug('set playlist: {}'.format(value))
+        itunes.playlist_play(value)
+    playlist = property(_playlist_get,_playlist_set)
+
+    #-------------------------------------------------------------------------------
+    def _shuffle_state_get(self):
+        value = itunes.shuffle_state_get()
+        self.logger.debug('get shuffle state: {}'.format(value))
+        return value
+    def _shuffle_state_set(self, value):
+        self.logger.debug('set shuffle state: {}'.format(value))
+        itunes.shuffle_state_set(value)
+    shuffle_state = property(_shuffle_state_get,_shuffle_state_set)
+
+    #-------------------------------------------------------------------------------
+    def _shuffle_mode_get(self):
+        value = itunes.shuffle_mode_get()
+        self.logger.debug('get shuffle mode: {}'.format(value))
+        return value
+    def _shuffle_mode_set(self, value):
+        self.logger.debug('set shuffle mode: {}'.format(value))
+        itunes.shuffle_mode_set(value)
+    shuffle_mode = property(_shuffle_mode_get,_shuffle_mode_set)
+
+    #-------------------------------------------------------------------------------
+    def _repeat_get(self):
+        value = itunes.repeat_get()
+        self.logger.debug('get repeat: {}'.format(value))
+        return value
+    def _repeat_set(self, value):
+        self.logger.debug('set repeat: {}'.format(value))
+        itunes.repeat_set(value)
+    repeat = property(_repeat_get,_repeat_set)
+
+    #-------------------------------------------------------------------------------
+    def _eq_state_get(self):
+        value = itunes.eq_state_get()
+        self.logger.debug('get eq state: {}'.format(value))
+        return value
+    def _eq_state_set(self, value):
+        self.logger.debug('set eq state: {}'.format(value))
+        itunes.eq_state_set(value)
+    eq_state = property(_eq_state_get,_eq_state_set)
+
+    #-------------------------------------------------------------------------------
+    @property
+    def eq_presets(self):
+        value = itunes.eq_presets()
+        self.logger.debug('all eq presets: {}'.format(value))
+        return value
+
+    #-------------------------------------------------------------------------------
+    def _eq_preset_get(self):
+        value = itunes.eq_preset_get()
+        self.logger.debug('get eq preset: {}'.format(value))
+        return value
+    def _eq_preset_set(self, value):
+        self.logger.debug('set eq preset: {}'.format(value))
+        itunes.eq_preset_set(value)
+    eq_preset = property(_eq_preset_get,_eq_preset_set)
+
+    #-------------------------------------------------------------------------------
+    @property
+    def player_state(self):
+        value = itunes.player_state_get()
+        self.logger.debug('get player state: {}'.format(value))
+        return value
+
+    #-------------------------------------------------------------------------------
+    def _settings_get(self):
+        active_devices = self.airplay.active_devices
+        airplay_volume = dict()
+        for deviceName in active_devices:
+            airplay_volume[deviceName] = self.airplay.device(deviceName).volume
+        settings = {
+            'volume':         self.volume,
+            'playlist':       self.playlist,
+            'shuffle_state':  self.shuffle_state,
+            'shuffle_mode':   self.shuffle_mode,
+            'repeat':         self.repeat,
+            'eq_state':       self.eq_state,
+            'eq_preset':      self.eq_preset,
+            'player_state':   self.player_state,
+            'active_devices': active_devices,
+            'airplay_volume': airplay_volume
+            }
+        return settings
+    def _settings_set(self,settings):
+        self.volume        = settings['volume']
+        self.shuffle_state = settings['shuffle_state']
+        self.shuffle_mode  = settings['shuffle_mode']
+        self.repeat        = settings['repeat']
+        self.eq_state      = settings['eq_state']
+        self.eq_preset     = settings['eq_preset']
+        self.airplay.active_devices = settings['active_devices']
+        for name, volume in settings['airplay_volume'].items():
+            self.airplay.device(name).volume = int(round(volume*100.0/settings['volume']))
+        if settings['playlist'] in self.playlists:
+            if settings['player_state'] in ['playing','paused']:
+                itunes.playlist_play(settings['playlist'])
+            if settings['player_state'] == 'paused':
+                itunes.pause()
+    settings = property(_settings_get,_settings_set)
 
 ################################################################################
 # Classes
@@ -542,7 +667,7 @@ class Fader(threading.Thread):
             self.logger.debug('no fade: no volume change')
         elif duration <= MIN_STEP_TIME:
             # instant volume change
-            self.logger.debug('no fade: instance volume change')
+            self.logger.debug('no fade: instant volume change')
             itunes.volume_set(end_volume)
         else:
             # actual fade
@@ -625,11 +750,11 @@ class Airplay(object):
     #-------------------------------------------------------------------------------
     def _getActive(self):
         value = itunes.airplay_devices_active_get()
-        self.logger.debug('get active airplay devices: {}'.format(value))
+        self.logger.debug('get active airplay devices: {}'.format(list(value)))
         return value
-    def _setActive(self,deviceList):
-        self.logger.debug('set active airplay devices: {}'.format(value))
-        itunes.airplay_devices_active_set(deviceList)
+    def _setActive(self,value):
+        self.logger.debug('set active airplay devices: {}'.format(list(value)))
+        itunes.airplay_devices_active_set(value)
     active_devices = property(_getActive,_setActive)
 
     #-------------------------------------------------------------------------------
