@@ -1,62 +1,12 @@
 # iTunes Local Control
 
-Indigo plugin front end for applescript control of local iTunes instance.
+A simple wrapper plugin to control local iTunes (i.e. on the same machine as Indigo) with applescript (via the approved applescript python module). I use it in conjunction with the official iTunes plugin to do things it can't like:
 
-## Defined Actions
+* Activate and deactivate airplay devices
+* Set airplay device volumes (as % of master volume)
+* Slow fade the master volume
+* Set the shuffle mode (Songs, Albums, Groupings)
+* Set the EQ on/off setting and preset
+* Save/recall shuffle, repeat, volume, airplay, etc. to/from variables.
 
-* iTunes Launch
-* iTunes Quit
-* iTunes Toggle
-* iTunes Play
-* iTunes Pause
-* iTunes PlayPause
-* iTunes Stop
-* iTunes Next
-* iTunes Previous
-* iTunes Back
-* iTunes Set Volume
-* iTunes Increase Volume
-* iTunes Decrease Volume
-* iTunes Volume to Variable
-* iTunes Volume from Variable
-* iTunes Fade Volume To
-* iTunes Fade Volume Up
-* iTunes Fade Volume Down
-* iTunes Fade Volume to Variable Value
-* iTunes Stop Fade
-* iTunes Play Playlist
-* iTunes Current Playlist to Variable
-* iTunes Play Playlist from Variable
-* iTunes Shuffle On
-* iTunes Shuffle Off
-* iTunes Shuffle Toggle
-* iTunes Shuffle State to Variable
-* iTunes Shuffle State from Variable
-* iTunes Shuffle Mode Songs
-* iTunes Shuffle Mode Albums
-* iTunes Shuffle Mode Groupings
-* iTunes Shuffle Mode to Variable
-* iTunes Shuffle Mode from Variable
-* iTunes Repeat Off
-* iTunes Repeat One
-* iTunes Repeat All
-* iTunes Repeat to Variable
-* iTunes Repeat from Variable
-* iTunes EQ On
-* iTunes EQ Off
-* iTunes EQ Toggle
-* iTunes EQ State to Variable
-* iTunes EQ State from Variable
-* iTunes Set EQ Preset
-* iTunes Current EQ Preset to Variable
-* iTunes Current EQ Preset from Variable
-* iTunes Airplay Device Status
-* iTunes Airplay Activate Device
-* iTunes Airplay Deactivate Device
-* iTunes Airplay Toggle Device
-* iTunes Airplay Device Volume
-* iTunes Airplay Devices Group
-* iTunes Airplay Devices to Variable
-* iTunes Airplay Devices from Variable
-* iTunes Current Settings to Variable
-* iTunes Current Settings from Variable
+The complete list of available actions is quite extensive.

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>PluginVersion</key>
-	<string>0.0.2</string>
+	<string>0.0.3</string>
 	<key>ServerApiVersion</key>
 	<string>2.0</string>
 	<key>IwsApiVersion</key>
@@ -23,5 +23,12 @@
 			<string>https://github.com/kmarkley/Indigo-Local-Control</string>
 		</dict>
 	</array>
+	<key>GithubInfo</key>
+	<dict>
+		<key>GithubRepo</key>
+		<string>Indigo-iTunes-Local-Control</string>
+		<key>GithubUser</key>
+		<string>kmarkley</string>
+	</dict>
 </dict>
 </plist>
