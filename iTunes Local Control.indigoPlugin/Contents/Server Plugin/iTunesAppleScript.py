@@ -138,11 +138,6 @@ _shuffle_mode_get = _make('''
 
 #-------------------------------------------------------------------------------
 _shuffle_mode_set = _make('''
-    	set current EQ preset to (item 1 of args)
-    ''')
-
-#-------------------------------------------------------------------------------
-_shuffle_mode_set = _make('''
     	if (item 1 of args) is "songs" then
     		set shuffle mode to songs
     	else if (item 1 of args) is "albums" then
