@@ -51,7 +51,7 @@ _running = _make('''
         return application "iTunes" is running
     ''', wrap=False)
 
-#-------------------------------------------------------------------------------
+################################################################################
 _volume_get = _make('''
         return sound volume
     ''')
@@ -61,7 +61,7 @@ _volume_set = _make('''
         set sound volume to (item 1 of args)
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _playpause = _make('''
         playpause
     ''')
@@ -101,7 +101,7 @@ _player_state_get = _make('''
         return player state as string
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _playlist_play = _make('''
         play playlist named (item 1 of args)
     ''')
@@ -121,7 +121,7 @@ _playlist_current = _make('''
         return current_playlist
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _shuffle_state_get = _make('''
     	return shuffle enabled
     ''')
@@ -138,6 +138,11 @@ _shuffle_mode_get = _make('''
 
 #-------------------------------------------------------------------------------
 _shuffle_mode_set = _make('''
+    	set current EQ preset to (item 1 of args)
+    ''')
+
+#-------------------------------------------------------------------------------
+_shuffle_mode_set = _make('''
     	if (item 1 of args) is "songs" then
     		set shuffle mode to songs
     	else if (item 1 of args) is "albums" then
@@ -149,7 +154,7 @@ _shuffle_mode_set = _make('''
     	end if
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _repeat_get = _make('''
     	return song repeat as string
     ''')
@@ -167,7 +172,7 @@ _repeat_set = _make('''
     	end if
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _eq_state_get = _make('''
     	return EQ enabled
     ''')
@@ -184,15 +189,15 @@ _eq_presets = _make('''
 
 #-------------------------------------------------------------------------------
 _eq_preset_get = _make('''
-    	return current EQ preset as string
+    	return name of current EQ preset as string
     ''')
 
 #-------------------------------------------------------------------------------
-_shuffle_mode_set = _make('''
-    	set current EQ preset to (item 1 of args)
+_eq_preset_set = _make('''
+    	set current EQ preset to EQ preset named (item 1 of args)
     ''')
 
-#-------------------------------------------------------------------------------
+################################################################################
 _airplay_devices_all = _make('''
     	return (get name of every AirPlay device)
     ''')
@@ -245,7 +250,7 @@ def quit():
 def running():
     return _run(_running)
 
-#-------------------------------------------------------------------------------
+################################################################################
 def volume_get():
     return _run(_volume_get)
 
@@ -253,7 +258,7 @@ def volume_get():
 def volume_set(volume):
     return _run(_volume_set, volume)
 
-#-------------------------------------------------------------------------------
+################################################################################
 def playpause():
     return _run(_playpause)
 
@@ -285,7 +290,7 @@ def back():
 def player_state_get():
     return _run(_player_state_get)
 
-#-------------------------------------------------------------------------------
+################################################################################
 def playlist_play(playlist):
     return _run(_playlist_play, playlist)
 
@@ -297,7 +302,7 @@ def playlists():
 def playlist_current():
     return _run(_playlist_current)
 
-#-------------------------------------------------------------------------------
+################################################################################
 def shuffle_state_get():
     return _run(_shuffle_state_get)
 
@@ -313,7 +318,7 @@ def shuffle_mode_get():
 def shuffle_mode_set(shuffle):
     return _run(_shuffle_mode_set, shuffle.lower())
 
-#-------------------------------------------------------------------------------
+################################################################################
 def repeat_get():
     return _run(_repeat_get)
 
@@ -321,7 +326,7 @@ def repeat_get():
 def repeat_set(repeat):
     return _run(_repeat_set, repeat.lower())
 
-#-------------------------------------------------------------------------------
+################################################################################
 def eq_state_get():
     return _run(_eq_state_get)
 
@@ -341,7 +346,7 @@ def eq_preset_get():
 def eq_preset_set(preset):
     return _run(_eq_preset_set, preset)
 
-#-------------------------------------------------------------------------------
+################################################################################
 def airplay_devices_all():
     return _run(_airplay_devices_all)
 

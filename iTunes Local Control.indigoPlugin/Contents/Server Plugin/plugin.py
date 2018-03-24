@@ -317,7 +317,7 @@ class Plugin(indigo.PluginBase):
     #-------------------------------------------------------------------------------
     def eqStateToggle(self, action):
         self.logger.debug('action "{}"'.format(action.description))
-        self.eq_state = not self.shuffle_state
+        self.eq_state = not self.eq_state
 
     #-------------------------------------------------------------------------------
     def eqStateToVariable(self, action):
@@ -342,7 +342,7 @@ class Plugin(indigo.PluginBase):
     #-------------------------------------------------------------------------------
     def eqPresetFromVariable(self, action):
         self.logger.debug('action "{}": {}'.format(action.description,action.props['variable']))
-        self.eq_preset = variable_get(action.props['variable'],bool)
+        self.eq_preset = variable_get(action.props['variable'])
 
     #-------------------------------------------------------------------------------
     def airplayDeviceStatus(self, action):
@@ -580,7 +580,10 @@ class Plugin(indigo.PluginBase):
         self.eq_preset     = settings['eq_preset']
         self.airplay.active_devices = settings['active_devices']
         for name, volume in settings['airplay_volume'].items():
-            self.airplay.device(name).volume = int(round(volume*100.0/settings['volume']))
+            if settings['volume'] == 0:
+                self.airplay.device(name).volume = 0
+            else:
+                self.airplay.device(name).volume = int(round(volume*100.0/settings['volume']))
         if settings['playlist'] in self.playlists:
             if settings['player_state'] in ['playing','paused']:
                 itunes.playlist_play(settings['playlist'])
