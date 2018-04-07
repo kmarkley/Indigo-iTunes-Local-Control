@@ -31,8 +31,9 @@ def _run(script_object, *args):
         args = list(args[0])
     try:
         return script_object.run(*args)
-    except:
-        indigo.server.log('applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
+    except Exception as e:
+        indigo.server.log(u'applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
+        indigo.server.log(str(e), isError=True)
 
 ################################################################################
 # create all the applescript objects
@@ -232,6 +233,23 @@ _airplay_device_volume_set = _make('''
     ''')
 
 ################################################################################
+_play_single_track = _make('''
+    	set track_specifier to track (item 2 of args) of playlist named (item 1 of args)
+    	set track_duration to duration of track_specifier
+    	play track_specifier
+        try
+        	repeat while current track is equal to track_specifier
+        		-- recalculate track_end in case of FF or RW
+        		set track_end to (current date) + track_duration - player position
+                delay 0.05
+        	end repeat
+        end try
+    	if (current date) is greater than or equal to track_end then
+    		stop
+    	end if
+    ''')
+
+################################################################################
 # callable methods
 ################################################################################
 def launch():
@@ -368,3 +386,17 @@ def airplay_device_volume_get(airplayDevice):
 #-------------------------------------------------------------------------------
 def airplay_device_volume_set(airplayDevice, airplayVolume):
     return _run(_airplay_device_volume_set, airplayDevice, airplayVolume)
+
+################################################################################
+def playApplescriptSpecifier(specifier):
+    return executeApplescriptText('''play {}'''.format(specifier))
+
+#-------------------------------------------------------------------------------
+def executeApplescriptText(appleScriptText):
+    applescriptObject = _make(appleScriptText)
+    return _run(applescriptObject)
+
+################################################################################
+def play_single_track(playlist, trackId):
+    # should be run on thread
+    return _run(_play_single_track, playlist, trackId)

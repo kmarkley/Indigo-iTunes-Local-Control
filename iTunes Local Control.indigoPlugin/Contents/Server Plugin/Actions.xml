@@ -153,6 +153,16 @@
 			</Field>
 		</ConfigUI>
 	</Action>
+	<Action id='playPlaylistShuffled'>
+		<Name>iTunes Play Playlist Shuffled</Name>
+		<CallbackMethod>playPlaylistShuffled</CallbackMethod>
+		<ConfigUI>
+			<Field id='playlist' type='menu'>
+				<Label>Playlist:</Label>
+				<List class='self' method='menu_playlists'/>
+			</Field>
+		</ConfigUI>
+	</Action>
 	<Action id='playlistToVariable'>
 		<Name>iTunes Current Playlist to Variable</Name>
 		<CallbackMethod>playlistToVariable</CallbackMethod>
@@ -170,6 +180,33 @@
 			<Field id='variable' type='menu'>
 				<Label>Variable:</Label>
 				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='singleSeperator' />
+	<Action id='playSingleTrackPlaylistNumber'>
+		<Name>iTunes Play Single Track by Playlist+Number</Name>
+		<CallbackMethod>playSingleTrackPlaylistNumber</CallbackMethod>
+		<ConfigUI>
+			<Field id='playlist' type='menu'>
+				<Label>Playlist:</Label>
+				<List class='self' method='menu_playlists'/>
+			</Field>
+			<Field id='trackNumber' type='textfield' defaultValue='1'>
+				<Label>Track Number:</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playSingleTrackPlaylistName'>
+		<Name>iTunes Play Single Track by Playlist+Name</Name>
+		<CallbackMethod>playSingleTrackPlaylistName</CallbackMethod>
+		<ConfigUI>
+			<Field id='playlist' type='menu'>
+				<Label>Playlist:</Label>
+				<List class='self' method='menu_playlists'/>
+			</Field>
+			<Field id='trackName' type='textfield'>
+				<Label>Track Name:</Label>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -416,7 +453,7 @@
 				<Label>Convert?:</Label>
 				<Description>Convert to string to display in control pages.</Description>
 			</Field>
-			<Field id='convertHelp2' type='label' alignWithControl='true'>
+			<Field id='convertHelp2' type='label' alignWithControl='true' defaultValue='none'>
 				<Label>Leave unchecked to use for restoring devices.</Label>
 			</Field>
 		</ConfigUI>
@@ -449,6 +486,48 @@
 			<Field id='variable' type='menu'>
 				<Label>Variable:</Label>
 				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='applescriptSeperator' />
+	<Action id='playApplescriptSpecifier'>
+		<Name>iTunes Play Applescript Specifier</Name>
+		<CallbackMethod>playApplescriptSpecifier</CallbackMethod>
+		<ConfigUI>
+			<Field id='applescriptLine1' type='label' fontColor='blue'>
+				<Label>tell application 'iTunes'</Label>
+			</Field>
+			<Field id='specifier' type='textfield' fontColor='blue'>
+				<Label fontColor='blue'>    play</Label>
+			</Field>
+			<Field id='applescriptLine2' type='label' fontColor='blue'>
+				<Label>end tell</Label>
+			</Field>
+			<Field id='helpSeparator' type='separator' />
+			<Field id='applescriptSpecifierHelp' type='label' defaultValue='none'>
+				<Label>Example:</Label>
+			</Field>
+			<Field id='applescriptSpecifierExample' type='label' defaultValue='none' fontColor='blue'>
+				<Label>    last track of playlist "My Playlist" whose loved is true</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='executeApplescriptText'>
+		<Name>iTunes Execute Applescript Text</Name>
+		<CallbackMethod>executeApplescriptText</CallbackMethod>
+		<ConfigUI>
+			<Field id='applescriptLine1' type='label' fontColor='blue'>
+				<Label>tell application 'iTunes'</Label>
+			</Field>
+			<Field id='applescriptText' type='textfield'>
+				<Label>        </Label>
+			</Field>
+			<Field id='applescriptLine2' type='label' fontColor='blue'>
+				<Label>end tell</Label>
+			</Field>
+			<Field id='helpSeparator' type='separator' />
+			<Field id='applescriptTextHelp' type='label' defaultValue='none'>
+				<Label>Applescript text enetered here will be executed via py-applescript.</Label>
 			</Field>
 		</ConfigUI>
 	</Action>
