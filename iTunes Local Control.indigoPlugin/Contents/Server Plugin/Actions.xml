@@ -151,6 +151,9 @@
 				<Label>Playlist:</Label>
 				<List class='self' method='menu_playlists'/>
 			</Field>
+			<Field id='shuffleNote' type='label' fontColor='blue'>
+				<Label>Note: shuffle state will remain OFF after this action completes.</Label>
+			</Field>
 		</ConfigUI>
 	</Action>
 	<Action id='playPlaylistShuffled'>
@@ -160,6 +163,9 @@
 			<Field id='playlist' type='menu'>
 				<Label>Playlist:</Label>
 				<List class='self' method='menu_playlists'/>
+			</Field>
+			<Field id='shuffleNote' type='label' fontColor='red'>
+				<Label>Note: shuffle state will remain ON after this action completes.</Label>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -195,6 +201,9 @@
 			<Field id='trackNumber' type='textfield' defaultValue='1'>
 				<Label>Track Number:</Label>
 			</Field>
+			<Field id='playlistNote' type='label' fontColor='blue'>
+				<Label>Note: this action will create/update a playlist named "Indigo Single Track"</Label>
+			</Field>
 		</ConfigUI>
 	</Action>
 	<Action id='playSingleTrackPlaylistName'>
@@ -207,6 +216,22 @@
 			</Field>
 			<Field id='trackName' type='textfield'>
 				<Label>Track Name:</Label>
+			</Field>
+			<Field id='playlistNote' type='label' fontColor='blue'>
+				<Label>Note: this action will create/update a playlist named "Indigo Single Track"</Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playSingleTrackPlaylistRandom'>
+		<Name>iTunes Play Single Random Track from Playlist</Name>
+		<CallbackMethod>playSingleTrackPlaylistRandom</CallbackMethod>
+		<ConfigUI>
+			<Field id='playlist' type='menu'>
+				<Label>Playlist:</Label>
+				<List class='self' method='menu_playlists'/>
+			</Field>
+			<Field id='playlistNote' type='label' fontColor='blue'>
+				<Label>Note: this action will create/update a playlist named "Indigo Single Track"</Label>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -498,16 +523,16 @@
 				<Label>tell application 'iTunes'</Label>
 			</Field>
 			<Field id='specifier' type='textfield' fontColor='blue'>
-				<Label fontColor='blue'>    play</Label>
+				<Label fontColor='blue'>	play</Label>
 			</Field>
 			<Field id='applescriptLine2' type='label' fontColor='blue'>
 				<Label>end tell</Label>
 			</Field>
 			<Field id='helpSeparator' type='separator' />
-			<Field id='applescriptSpecifierHelp' type='label' defaultValue='none'>
+			<Field id='applescriptHelp' type='label' defaultValue='none'>
 				<Label>Example:</Label>
 			</Field>
-			<Field id='applescriptSpecifierExample' type='label' defaultValue='none' fontColor='blue'>
+			<Field id='applescriptExample' type='label' defaultValue='none' fontColor='blue'>
 				<Label>    last track of playlist "My Playlist" whose loved is true</Label>
 			</Field>
 		</ConfigUI>
@@ -520,14 +545,17 @@
 				<Label>tell application 'iTunes'</Label>
 			</Field>
 			<Field id='applescriptText' type='textfield'>
-				<Label>        </Label>
+				<Label>	.</Label>
 			</Field>
 			<Field id='applescriptLine2' type='label' fontColor='blue'>
 				<Label>end tell</Label>
 			</Field>
 			<Field id='helpSeparator' type='separator' />
-			<Field id='applescriptTextHelp' type='label' defaultValue='none'>
-				<Label>Applescript text enetered here will be executed via py-applescript.</Label>
+			<Field id='applescriptHelp' type='label' defaultValue='none'>
+				<Label>Example:</Label>
+			</Field>
+			<Field id='applescriptExample' type='label' defaultValue='none' fontColor='blue'>
+				<Label>    duplicate current track to playlist named "My Favorites"</Label>
 			</Field>
 		</ConfigUI>
 	</Action>

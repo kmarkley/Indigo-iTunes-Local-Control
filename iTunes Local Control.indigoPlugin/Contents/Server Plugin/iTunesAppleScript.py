@@ -52,7 +52,7 @@ _running = _make('''
         return application "iTunes" is running
     ''', wrap=False)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _volume_get = _make('''
         return sound volume
     ''')
@@ -62,7 +62,7 @@ _volume_set = _make('''
         set sound volume to (item 1 of args)
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _playpause = _make('''
         playpause
     ''')
@@ -102,7 +102,7 @@ _player_state_get = _make('''
         return player state as string
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _playlist_play = _make('''
         play playlist named (item 1 of args)
     ''')
@@ -122,7 +122,35 @@ _playlist_current = _make('''
         return current_playlist
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+_play_single_track = _make('''
+    	set single_playlist_name to "Indigo Single Track"
+
+        -- get track to be played
+    	set input_playlist to playlist named (item 1 of args)
+    	if (item 2 of args) is missing value then
+    		set track_id to (random number from 1 to (count tracks in input_playlist))
+    	else
+    		set track_id to (item 2 of args)
+    	end if
+    	set the_track to track track_id of input_playlist
+
+        -- prep the playlist
+    	try
+    		set single_playlist to user playlist single_playlist_name
+    		delete every track of single_playlist
+    	on error
+    		set single_playlist to make new playlist with properties {name:single_playlist_name}
+    	end try
+
+        -- add track to playlist
+    	duplicate the_track to single_playlist
+
+        -- play track via playlist
+    	play single_playlist
+    ''')
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _shuffle_state_get = _make('''
     	return shuffle enabled
     ''')
@@ -150,7 +178,7 @@ _shuffle_mode_set = _make('''
     	end if
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _repeat_get = _make('''
     	return song repeat as string
     ''')
@@ -168,7 +196,7 @@ _repeat_set = _make('''
     	end if
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _eq_state_get = _make('''
     	return EQ enabled
     ''')
@@ -193,7 +221,7 @@ _eq_preset_set = _make('''
     	set current EQ preset to EQ preset named (item 1 of args)
     ''')
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _airplay_devices_all = _make('''
     	return (get name of every AirPlay device)
     ''')
@@ -233,23 +261,6 @@ _airplay_device_volume_set = _make('''
     ''')
 
 ################################################################################
-_play_single_track = _make('''
-    	set track_specifier to track (item 2 of args) of playlist named (item 1 of args)
-    	set track_duration to duration of track_specifier
-    	play track_specifier
-        try
-        	repeat while current track is equal to track_specifier
-        		-- recalculate track_end in case of FF or RW
-        		set track_end to (current date) + track_duration - player position
-                delay 0.05
-        	end repeat
-        end try
-    	if (current date) is greater than or equal to track_end then
-    		stop
-    	end if
-    ''')
-
-################################################################################
 # callable methods
 ################################################################################
 def launch():
@@ -263,7 +274,7 @@ def quit():
 def running():
     return _run(_running)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def volume_get():
     return _run(_volume_get)
 
@@ -271,7 +282,7 @@ def volume_get():
 def volume_set(volume):
     return _run(_volume_set, volume)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def playpause():
     return _run(_playpause)
 
@@ -303,7 +314,7 @@ def back():
 def player_state_get():
     return _run(_player_state_get)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def playlist_play(playlist):
     return _run(_playlist_play, playlist)
 
@@ -315,7 +326,13 @@ def playlists():
 def playlist_current():
     return _run(_playlist_current)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+def play_single_track(playlist, trackId):
+    if trackId is None:
+        trackId = applescript.kMissingValue
+    return _run(_play_single_track, playlist, trackId)
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def shuffle_state_get():
     return _run(_shuffle_state_get)
 
@@ -331,7 +348,7 @@ def shuffle_mode_get():
 def shuffle_mode_set(shuffle):
     return _run(_shuffle_mode_set, shuffle.lower())
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def repeat_get():
     return _run(_repeat_get)
 
@@ -339,7 +356,7 @@ def repeat_get():
 def repeat_set(repeat):
     return _run(_repeat_set, repeat.lower())
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def eq_state_get():
     return _run(_eq_state_get)
 
@@ -359,7 +376,7 @@ def eq_preset_get():
 def eq_preset_set(preset):
     return _run(_eq_preset_set, preset)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def airplay_devices_all():
     return _run(_airplay_devices_all)
 
@@ -387,7 +404,7 @@ def airplay_device_volume_get(airplayDevice):
 def airplay_device_volume_set(airplayDevice, airplayVolume):
     return _run(_airplay_device_volume_set, airplayDevice, airplayVolume)
 
-################################################################################
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def playApplescriptSpecifier(specifier):
     return executeApplescriptText('''play {}'''.format(specifier))
 
@@ -395,8 +412,3 @@ def playApplescriptSpecifier(specifier):
 def executeApplescriptText(appleScriptText):
     applescriptObject = _make(appleScriptText)
     return _run(applescriptObject)
-
-################################################################################
-def play_single_track(playlist, trackId):
-    # should be run on thread
-    return _run(_play_single_track, playlist, trackId)

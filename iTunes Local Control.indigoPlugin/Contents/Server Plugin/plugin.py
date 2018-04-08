@@ -116,9 +116,9 @@ class Plugin(indigo.PluginBase):
         else:
             return (True, valuesDict)
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     # Action Methods
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def launch(self, action):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.onState = True
@@ -133,7 +133,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.onState = not self.onState
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def play(self, action):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.control.play()
@@ -168,7 +168,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.control.back()
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def setVolume(self, action):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['volume']))
         self.volume = action.props['volume']
@@ -222,16 +222,17 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.fader.stop()
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def playPlaylist(self, action):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['playlist']))
+        self.shuffle_state = False
         self.playlist = action.props['playlist']
 
     #-------------------------------------------------------------------------------
     def playPlaylistShuffled(self, action):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['playlist']))
-        self.shuffle_state = True
         self.shuffle_mode = 'songs'
+        self.shuffle_state = True
         self.playlist = action.props['playlist']
 
     #-------------------------------------------------------------------------------
@@ -244,19 +245,22 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['variable']))
         self.playlist = variable_get(action.props['variable'])
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def playSingleTrackPlaylistNumber(self, action):
         self.logger.debug(u'action "{}": {} {}'.format(action.description, action.props['playlist'], int(action.props['trackNumber'])))
-        task = threading.Thread(target=itunes.play_single_track, args=(action.props['playlist'], int(action.props['trackNumber'])))
-        task.start()
+        itunes.play_single_track(action.props['playlist'], int(action.props['trackNumber']))
 
     #-------------------------------------------------------------------------------
     def playSingleTrackPlaylistName(self, action):
         self.logger.debug(u'action "{}": {} {}'.format(action.description, action.props['playlist'], action.props['trackName']))
-        task = threading.Thread(target=itunes.play_single_track, args=(action.props['playlist'], action.props['trackName']))
-        task.start()
+        itunes.play_single_track(action.props['playlist'], action.props['trackName'])
 
     #-------------------------------------------------------------------------------
+    def playSingleTrackPlaylistRandom(self, action):
+        self.logger.debug(u'action "{}": {}'.format(action.description, action.props['playlist']))
+        itunes.play_single_track(action.props['playlist'], None)
+
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def shuffleStateOn(self, action):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.shuffle_state = True
@@ -306,7 +310,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['variable']))
         self.shuffle_mode = variable_get(action.props['variable'])
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def repeatOff(self, action):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.repeat = 'off'
@@ -331,7 +335,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['variable']))
         self.repeat = variable_get(action.props['variable'])
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def eqStateOn(self, action):
         self.logger.debug(u'action "{}"'.format(action.description))
         self.eq_state = True
@@ -371,7 +375,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['variable']))
         self.eq_preset = variable_get(action.props['variable'])
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def airplayDeviceStatus(self, action):
         self.logger.debug(u'action "{}": {}@{} {}'.format(action.description,action.props['device'],action.props['volume'],action.props['status']))
         self.airplay.device(action.props['device']).active = action.props['status']
@@ -425,7 +429,7 @@ class Plugin(indigo.PluginBase):
         self.logger.debug(u'action "{}": {}'.format(action.description,action.props['variable']))
         self.settings = variable_get(action.props['variable'], dict)
 
-    #-------------------------------------------------------------------------------
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     def playApplescriptSpecifier(self, action):
         itunes.playApplescriptSpecifier(action.props['specifier'])
 
