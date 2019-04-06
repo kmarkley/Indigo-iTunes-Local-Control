@@ -32,6 +32,7 @@ def _run(script_object, *args):
     try:
         return script_object.run(*args)
     except Exception as e:
+        indigo.server.log(u'applescript runtime error', isError=True)
         indigo.server.log(u'applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
         indigo.server.log(str(e), isError=True)
 
@@ -124,8 +125,6 @@ _playlist_current = _make('''
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _play_single_track = _make('''
-    	set single_playlist_name to "Indigo Single Track"
-
         -- get track to be played
     	set input_playlist to playlist named (item 1 of args)
     	if (item 2 of args) is missing value then
@@ -136,6 +135,7 @@ _play_single_track = _make('''
     	set the_track to track track_id of input_playlist
 
         -- prep the playlist
+    	set single_playlist_name to "Indigo Single Track"
     	try
     		set single_playlist to user playlist single_playlist_name
     		delete every track of single_playlist

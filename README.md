@@ -12,3 +12,5 @@ A simple wrapper plugin to control local iTunes (i.e. on the same machine as Ind
 * Play or execute snippets of iTunes applescript
 
 The [complete list](https://github.com/kmarkley/Indigo-iTunes-Local-Control/wiki#defined-actions) of available actions is quite extensive.
+
+Requires iTunes 12.4 or later.
