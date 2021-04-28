@@ -7,6 +7,13 @@
 import applescript
 import indigo
 import inspect
+import os
+
+mac_base_ver = int(os.popen("sw_vers -productVersion").read().strip().split(".")[0])
+if mac_base_ver > 10:
+    AS_TARGET_NAME = "Music"
+else:
+    AS_TARGET_NAME = "iTunes"
 
 ################################################################################
 # applescript helpers
@@ -19,11 +26,11 @@ def _make(ascript, wrap=True):
 def _wrap(ascript):
     return '''
     on run(args)
-        tell application "iTunes"
+        tell application "{}"
             {}
         end tell
     end run
-    '''.format(ascript)
+    '''.format(AS_TARGET_NAME, ascript)
 
 #-------------------------------------------------------------------------------
 def _run(script_object, *args):
@@ -50,8 +57,8 @@ _quit = _make('''
 
 #-------------------------------------------------------------------------------
 _running = _make('''
-        return application "iTunes" is running
-    ''', wrap=False)
+        return application "{}" is running
+    '''.format(AS_TARGET_NAME), wrap=False)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _volume_get = _make('''
