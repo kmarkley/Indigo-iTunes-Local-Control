@@ -20,6 +20,7 @@ else:
 ################################################################################
 def _make(ascript, wrap=True):
     if wrap: ascript = _wrap(ascript)
+    indigo.server.log(ascript, type="Applescript Compile Source")
     return applescript.AppleScript(source=ascript)
 
 #-------------------------------------------------------------------------------
