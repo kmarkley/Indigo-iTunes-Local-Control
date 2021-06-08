@@ -10,7 +10,7 @@ import inspect
 import os
 
 mac_base_ver = int(os.popen("sw_vers -productVersion").read().strip().split(".")[0])
-if mac_base_ver > 10:
+if mac_base_ver >= 10:
     AS_TARGET_NAME = "Music"
 else:
     AS_TARGET_NAME = "iTunes"
@@ -20,7 +20,6 @@ else:
 ################################################################################
 def _make(ascript, wrap=True):
     if wrap: ascript = _wrap(ascript)
-    indigo.server.log(ascript, type="Applescript Compile Source")
     return applescript.AppleScript(source=ascript)
 
 #-------------------------------------------------------------------------------
