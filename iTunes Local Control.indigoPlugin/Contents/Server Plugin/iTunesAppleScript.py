@@ -7,23 +7,31 @@
 import applescript
 import indigo
 import inspect
+import os
+
+mac_base_ver = int(os.popen("sw_vers -productVersion").read().strip().split(".")[0])
+if mac_base_ver > 10:
+    AS_TARGET_NAME = "Music"
+else:
+    AS_TARGET_NAME = "iTunes"
 
 ################################################################################
 # applescript helpers
 ################################################################################
 def _make(ascript, wrap=True):
     if wrap: ascript = _wrap(ascript)
+    indigo.server.log(ascript, type="Applescript Compile Source")
     return applescript.AppleScript(source=ascript)
 
 #-------------------------------------------------------------------------------
 def _wrap(ascript):
     return '''
     on run(args)
-        tell application "iTunes"
+        tell application "{}"
             {}
         end tell
     end run
-    '''.format(ascript)
+    '''.format(AS_TARGET_NAME, ascript)
 
 #-------------------------------------------------------------------------------
 def _run(script_object, *args):
@@ -32,6 +40,7 @@ def _run(script_object, *args):
     try:
         return script_object.run(*args)
     except Exception as e:
+        indigo.server.log(u'applescript runtime error', isError=True)
         indigo.server.log(u'applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
         indigo.server.log(str(e), isError=True)
 
@@ -49,8 +58,8 @@ _quit = _make('''
 
 #-------------------------------------------------------------------------------
 _running = _make('''
-        return application "iTunes" is running
-    ''', wrap=False)
+        return application "{}" is running
+    '''.format(AS_TARGET_NAME), wrap=False)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _volume_get = _make('''
@@ -124,8 +133,6 @@ _playlist_current = _make('''
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _play_single_track = _make('''
-    	set single_playlist_name to "Indigo Single Track"
-
         -- get track to be played
     	set input_playlist to playlist named (item 1 of args)
     	if (item 2 of args) is missing value then
@@ -136,6 +143,7 @@ _play_single_track = _make('''
     	set the_track to track track_id of input_playlist
 
         -- prep the playlist
+    	set single_playlist_name to "Indigo Single Track"
     	try
     		set single_playlist to user playlist single_playlist_name
     		delete every track of single_playlist
