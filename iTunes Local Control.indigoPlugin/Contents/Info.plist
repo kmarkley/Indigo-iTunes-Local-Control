@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>PluginVersion</key>
-	<string>0.0.8</string>
+	<string>2022.0.5</string>
 	<key>ServerApiVersion</key>
-	<string>2.0</string>
+	<string>3.0</string>
 	<key>IwsApiVersion</key>
 	<string>1.0.0</string>
 	<key>CFBundleDisplayName</key>
@@ -20,7 +20,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>https://forums.indigodomo.com/viewforum.php?f=331</string>
+			<string>https://github.com/kmarkley/Indigo-iTunes-Local-Control</string>
 		</dict>
 	</array>
 	<key>GithubInfo</key>

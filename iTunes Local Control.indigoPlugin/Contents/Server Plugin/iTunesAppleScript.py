@@ -5,9 +5,13 @@
 ################################################################################
 
 import applescript
-import indigo
 import inspect
 import os
+try:
+    import indigo
+except:
+    pass
+
 
 mac_base_ver = int(os.popen("sw_vers -productVersion").read().strip().split(".")[0])
 if mac_base_ver > 10:
@@ -20,7 +24,6 @@ else:
 ################################################################################
 def _make(ascript, wrap=True):
     if wrap: ascript = _wrap(ascript)
-    indigo.server.log(ascript, type="Applescript Compile Source")
     return applescript.AppleScript(source=ascript)
 
 #-------------------------------------------------------------------------------
@@ -28,7 +31,9 @@ def _wrap(ascript):
     return '''
     on run(args)
         tell application "{}"
-            {}
+    		with timeout of 6 seconds
+            	{}
+        	end timeout
         end tell
     end run
     '''.format(AS_TARGET_NAME, ascript)
@@ -40,8 +45,8 @@ def _run(script_object, *args):
     try:
         return script_object.run(*args)
     except Exception as e:
-        indigo.server.log(u'applescript runtime error', isError=True)
-        indigo.server.log(u'applescript:{}, args:{}'.format(inspect.stack()[1][3],args), isError=True)
+        indigo.server.log(f"Applescript runtime error", isError=True)
+        indigo.server.log(f"Applescript: {inspect.stack()[1][3]}, args: {args}", isError=True)
         indigo.server.log(str(e), isError=True)
 
 ################################################################################
@@ -131,6 +136,68 @@ _playlist_current = _make('''
         return current_playlist
     ''')
 
+###-------------------------------------------------------------------------------
+_album_get = _make('''
+        try
+        	if (album of the current track is not missing value) then
+        		get album of the current track
+        	end if	
+        end try
+    ''')
+
+###-------------------------------------------------------------------------------
+_artist_get = _make('''
+        try
+        	if (artist of the current track is not missing value) then
+        		get artist of the current track
+        	end if	
+        end try
+    ''')
+
+###-------------------------------------------------------------------------------
+_track_get = _make('''
+        try
+        	if (name of the current track is not missing value) then
+        		get name of the current track
+        	end if	
+        end try
+    ''')
+
+#-------------------------------------------------------------------------------
+_stream_title = _make('''
+    	try
+    		set stream_title to current stream title
+    	on error
+    		set stream_title to "None"
+    	end try
+        return stream_title
+    ''')
+
+#-------------------------------------------------------------------------------
+_track_duration_get = _make('''
+        try
+        	if (duration of the current track is not missing value) then
+        		get duration of the current track
+        	end if	
+        end try
+    ''')
+
+_player_pos_get = _make('''
+        try
+        	if (player position is not missing value) then
+        		get player position
+        	end if
+        end try
+    ''')
+
+_player_pos_set = _make('''
+        try
+        	if (player state is playing) or (player state is paused) then
+        		set player position to (item 1 of args)
+        	end if
+        end try
+    ''')
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _play_single_track = _make('''
         -- get track to be played
@@ -143,7 +210,7 @@ _play_single_track = _make('''
     	set the_track to track track_id of input_playlist
 
         -- prep the playlist
-    	set single_playlist_name to "Indigo Single Track"
+    	set single_playlist_name to "Indigo Single Track"        
     	try
     		set single_playlist to user playlist single_playlist_name
     		delete every track of single_playlist
@@ -333,6 +400,32 @@ def playlists():
 #-------------------------------------------------------------------------------
 def playlist_current():
     return _run(_playlist_current)
+
+#-------------------------------------------------------------------------------
+def stream_title():
+    return _run(_stream_title)
+
+###-------------------------------------------------------------------------------
+def album_get():
+    return _run(_album_get)
+
+###-------------------------------------------------------------------------------
+def artist_get():
+    return _run(_artist_get)
+
+###-------------------------------------------------------------------------------
+def track_get():
+    return _run(_track_get)
+
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+def track_duration_get():
+    return _run(_track_duration_get)
+
+def player_pos_get():
+    return _run(_player_pos_get)
+
+def player_pos_set(player_pos):
+    return _run(_player_pos_set, player_pos)
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 def play_single_track(playlist, trackId):
