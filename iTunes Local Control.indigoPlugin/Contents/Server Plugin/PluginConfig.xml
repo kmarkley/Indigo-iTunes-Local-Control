@@ -14,7 +14,7 @@
 	</Field>
 	<Field id='debugSeparator' type='separator' />
 	<Field id='showDebugInfo' type='checkbox'>
-		<Label>Enable debuging:</Label>
+		<Label>Enable debugging:</Label>
 		<Description>(not recommended)</Description>
 	</Field>
 </PluginConfig>

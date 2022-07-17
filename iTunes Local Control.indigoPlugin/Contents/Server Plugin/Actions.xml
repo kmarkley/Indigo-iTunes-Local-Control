@@ -189,7 +189,78 @@
 			</Field>
 		</ConfigUI>
 	</Action>
-	<Action id='singleSeperator' />
+	<Action id='albumToVariable'>
+		<Name>iTunes Current Album to Variable</Name>
+		<CallbackMethod>albumToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='artistToVariable'>
+		<Name>iTunes Current Artist to Variable</Name>
+		<CallbackMethod>artistToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='trackToVariable'>
+		<Name>iTunes Current Track Name to Variable</Name>
+		<CallbackMethod>trackToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='streamTitleToVariable'>
+		<Name>iTunes Current Stream Title to Variable</Name>
+		<CallbackMethod>streamTitleToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+		<Action id='trackDurationSeperator' />
+	<Action id='trackDurationToVariable'>
+		<Name>iTunes Current Track Duration to Variable</Name>
+		<CallbackMethod>trackDurationToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playerPosToVariable'>
+		<Name>iTunes Current Player Position to Variable</Name>
+		<CallbackMethod>playerPosToVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id='playerPosFromVariable'>
+		<Name>iTunes Current Player Position from Variable</Name>
+		<CallbackMethod>playerPosFromVariable</CallbackMethod>
+		<ConfigUI>
+			<Field id='variable' type='menu'>
+				<Label>Variable:</Label>
+				<List class='indigo.variables'/>
+			</Field>
+		</ConfigUI>
+	</Action>
+<Action id='singleSeperator' />
 	<Action id='playSingleTrackPlaylistNumber'>
 		<Name>iTunes Play Single Track by Playlist+Number</Name>
 		<CallbackMethod>playSingleTrackPlaylistNumber</CallbackMethod>
@@ -474,13 +545,15 @@
 				<Label>Variable:</Label>
 				<List class='indigo.variables'/>
 			</Field>
-			<Field id='convert' type='checkbox' defaultValue='false'>
+<!-- 
+			<Field id='convert' type='checkbox' defaultValue='true'>
 				<Label>Convert?:</Label>
 				<Description>Convert to string to display in control pages.</Description>
 			</Field>
 			<Field id='convertHelp2' type='label' alignWithControl='true' defaultValue='none'>
-				<Label>Leave unchecked to use for restoring devices.</Label>
+				<Label>Leave unchecked to use for restoring devices. Not necessary in latest version.</Label>
 			</Field>
+ -->
 		</ConfigUI>
 	</Action>
 	<Action id='airplayDevicesFromVariable'>
