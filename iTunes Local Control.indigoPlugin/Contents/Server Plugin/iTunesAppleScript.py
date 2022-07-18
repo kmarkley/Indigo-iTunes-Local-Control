@@ -6,15 +6,15 @@
 
 import applescript
 import inspect
-import os
+import platform
 try:
     import indigo
 except:
     pass
 
 
-mac_base_ver = int(os.popen("sw_vers -productVersion").read().strip().split(".")[0])
-if mac_base_ver >= 10:
+mac_ver = tuple([int(s) for s in platform.mac_ver()[0].split(".")])
+if mac_ver >= (10,15):
     AS_TARGET_NAME = "Music"
 else:
     AS_TARGET_NAME = "iTunes"
