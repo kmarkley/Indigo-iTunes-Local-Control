@@ -19,6 +19,11 @@ if mac_ver >= (10,15):
 else:
     AS_TARGET_NAME = "iTunes"
 
+AS_TIMEOUT = 6
+def set_timeout(timeout):
+    global AS_TIMEOUT 
+    AS_TIMEOUT = timeout
+
 ################################################################################
 # applescript helpers
 ################################################################################
@@ -31,12 +36,12 @@ def _wrap(ascript):
     return '''
     on run(args)
         tell application "{}"
-    		with timeout of 6 seconds
+    		with timeout of {} seconds
             	{}
         	end timeout
         end tell
     end run
-    '''.format(AS_TARGET_NAME, ascript)
+    '''.format(AS_TARGET_NAME, AS_TIMEOUT, ascript)
 
 #-------------------------------------------------------------------------------
 def _run(script_object, *args):

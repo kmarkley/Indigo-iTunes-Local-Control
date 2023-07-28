@@ -55,6 +55,7 @@ class Plugin(indigo.PluginBase):
             logLevel = "Info"
         global MIN_STEP_TIME
         MIN_STEP_TIME = self.pluginPrefs.get('minStepTime',0.2)
+        itunes.set_timeout(self.pluginPrefs.get('appleScriptTimeout',6))
 
         self.control = Control(self)
         self.airplay = Airplay(self)
@@ -101,6 +102,14 @@ class Plugin(indigo.PluginBase):
                 raise ValueError
         except:
             errorsDict['minStepTime'] = 'Must be number between 0.1 and 1.0'
+
+        try:
+            valuesDict['appleScriptTimeout'] = int(valuesDict['appleScriptTimeout'])
+            if not valuesDict['appleScriptTimeout'] > 0:
+                raise ValueError
+        except:
+            errorsDict['appleScriptTimeout'] = 'Must be a positive integer'
+
 
         if len(errorsDict) > 0:
             return (False, valuesDict, errorsDict)

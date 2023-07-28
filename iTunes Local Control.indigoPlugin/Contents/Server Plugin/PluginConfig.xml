@@ -12,6 +12,10 @@
 	<Field id='minStepHelp3' type='label' fontSize='small' fontColor='darkgray' alignWithControl='true'>
 		<Label>    • Too high and the fade will sound choppy</Label>
 	</Field>
+	<Field id='timeoutSeparator' type='separator' />
+	<Field id='appleScriptTimeout' type='textfield' defaultValue='6'>
+		<Label>AppleScript timeout</Label>
+	</Field>
 	<Field id='debugSeparator' type='separator' />
 	<Field id='showDebugInfo' type='checkbox'>
 		<Label>Enable debugging:</Label>
